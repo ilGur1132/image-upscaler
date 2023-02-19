@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-language" content="en">
+    <link type="text/css" rel="stylesheet" href="index.css">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div class="container">
+			<div id="fileio">
+				<span>Drop an image here</span>
+				<input type="file">
+				<div class="arrow">
+          <span>
+            <svg width="16" height="16" viewBox="0 0 32 32">
+              <path d="M 10.348666,0.73791638 6.776,4.3105844 18.521336,16.055921 6.776,27.801258 10.348666,31.373928 25.666672,16.055921 Z"/>
+            </svg>            
+          </span>
+        </div>
+			</div>
+			<div id="output">
+				<div class="inner"></div>
+				<div class="download">
+          <a id="download" title="Download Upscaled Image">
+            <svg width="12" height="12" viewBox="0 0 16 16">
+              <path d="M 7,15.375 2.54,10 C 2.287,9.695 2,9.461 2,9 2,8.375 2.516,8 3,8 H 6 V 1 C 6,0.45 6.45,0 7,0 H 9 C 9.55,0 10,0.45 10,1 V 8 H 13 C 13.484,8 14,8.375 14,9 14,9.461 13.713,9.695 13.46,10 L 9,15.375 C 8.688,15.758 8.445,16 8,16 7.555,16 7.313,15.758 7,15.375 Z"/>
+            </svg>
+          </a>
+        </div>
+			</div>
+		</div>
+		<div class="console">
+			<pre id="console">Loading, please wait ...</pre>
+		</div>
+		<div class="options">
+      <details open>
+        <summary>Settings</summary>
+        <div id="options">
+          <div class="left">
+            <label for="scale" title="Choose an scale level (2x, 3x or 4x).">
+              Upscale Level
+              <select id="scale">
+                <option value="2x">2x</option>
+                <option value="3x">3x</option>
+                <option value="4x">4x</option>
+                <option mode='canvas' value="5x">5x</option>
+                <option mode='canvas' value="6x">6x</option>
+                <option mode='canvas' value="7x">7x</option>
+                <option mode='canvas' value="8x">8x</option>
+                <option mode='canvas' value="9x">9x</option>
+                <option mode='canvas' value="10x">10x</option>
+              </select>
+            </label>
+            <label for="level" title="Choose a precision level for the artificial intelligence engine.">
+              Upscale Precision
+              <select id="level">
+                <option value="slim">Slim</option>
+                <option value="medium">Medium</option>
+                <option value="legacy">Legacy</option>
+                <option value="thick">Thick</option>
+              </select>
+            </label>
+            <label for="patchsize" title="Write a patch size (8 to 512 pixels).">
+              Patch Size (px)
+              <input type="number" id="patchsize">
+            </label>
+          </div>
+          <div class="right">
+            <label for="useai" title="Mark this option to use artificial intelligence for upscaling. The alternative engine is HTML5 Canvas.">
+              Use Artifial Intelligence
+              <input type="checkbox" id="useai">
+            </label>
+            <label for="usepatch" title="Mark this option to divide the input image into patches before upscaling. Using patches enables you to see the upscaling progress.">
+              Split the Image into Patches
+              <input type="checkbox" id="usepatch">
+            </label>
+          </div>
+        </div>
+      </details>
+		</div>
+    <div class="action">
+      <input type="button" id="upscale" title="Upscale" value="Upscale">
+    </div>
+    <!-- -->
+    <script type="text/javascript" src="vendor/tf.min.js"></script>
+    <script type="text/javascript" src="vendor/upscaler.min.js"></script>
+    <!-- -->
+		<script type="text/javascript" src="index.js"></script>
+	</body>
+</html>
