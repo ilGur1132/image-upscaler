@@ -63,9 +63,6 @@ if (window === window.top) {
   };
 
   var app = {
-    "iframe": {
-      "window": document.querySelector("iframe").contentWindow
-    },
     "addon": {
       "homepage": function () {
         return chrome.runtime.getManifest().homepage_url;
@@ -84,7 +81,7 @@ if (window === window.top) {
       get patchsize () {return app.storage.read("patchsize") !== undefined ? app.storage.read("patchsize") : 16}
     },
     "start": async function () {
-      let target = window === window.top ? app.iframe.window : window;
+      let target = window === window.top ? document.querySelector("iframe").contentWindow : window;
       /*  */
       target.postMessage({
         "from": "app",
