@@ -63,6 +63,7 @@ var background = {
 
 var config = {
   "iframe": {
+    "element": document.querySelector("iframe"),
     "window": document.querySelector("iframe").contentWindow
   },
   "addon": {
@@ -86,39 +87,6 @@ var config = {
           });
         }, 1000);
       }
-    }
-  },
-  "app": {
-    "stop": function () {
-      config.iframe.window.postMessage({
-        "from": "app",
-        "name": "stop"
-      }, '*');
-    },
-    "start": function () {
-      config.iframe.window.postMessage({
-        "from": "app",
-        "name": "storage",
-        "value": {
-          "scale": config.app.prefs.scale,
-          "level": config.app.prefs.level,
-          "useai": config.app.prefs.useai,
-          "usepatch": config.app.prefs.usepatch,
-          "patchsize": config.app.prefs.patchsize
-        }
-      }, '*');
-    },
-    "prefs": {
-      set scale (val) {config.storage.write("scale", val)},
-      set level (val) {config.storage.write("level", val)},
-      set useai (val) {config.storage.write("useai", val)},
-      set usepatch (val) {config.storage.write("usepatch", val)},
-      set patchsize (val) {config.storage.write("patchsize", val)},
-      get scale () {return config.storage.read("scale") !== undefined ? config.storage.read("scale") : "4x"},
-      get useai () {return config.storage.read("useai") !== undefined ? config.storage.read("useai") : false},
-      get level () {return config.storage.read("level") !== undefined ? config.storage.read("level") : "thick"},
-      get usepatch () {return config.storage.read("usepatch") !== undefined ? config.storage.read("usepatch") : true},
-      get patchsize () {return config.storage.read("patchsize") !== undefined ? config.storage.read("patchsize") : 16}
     }
   },
   "port": {
@@ -187,6 +155,37 @@ var config = {
       }
     }
   },
+  "app": {
+    "start": function () {
+      config.iframe.element.src = chrome.runtime.getURL("/data/interface/index.html");
+      /*  */
+      config.iframe.element.onload = function () {
+        config.iframe.window.postMessage({
+          "from": "app",
+          "name": "storage",
+          "value": {
+            "scale": config.app.prefs.scale,
+            "level": config.app.prefs.level,
+            "useai": config.app.prefs.useai,
+            "usepatch": config.app.prefs.usepatch,
+            "patchsize": config.app.prefs.patchsize
+          }
+        }, '*');
+      }
+    },
+    "prefs": {
+      set scale (val) {config.storage.write("scale", val)},
+      set level (val) {config.storage.write("level", val)},
+      set useai (val) {config.storage.write("useai", val)},
+      set usepatch (val) {config.storage.write("usepatch", val)},
+      set patchsize (val) {config.storage.write("patchsize", val)},
+      get scale () {return config.storage.read("scale") !== undefined ? config.storage.read("scale") : "4x"},
+      get useai () {return config.storage.read("useai") !== undefined ? config.storage.read("useai") : false},
+      get level () {return config.storage.read("level") !== undefined ? config.storage.read("level") : "thick"},
+      get usepatch () {return config.storage.read("usepatch") !== undefined ? config.storage.read("usepatch") : true},
+      get patchsize () {return config.storage.read("patchsize") !== undefined ? config.storage.read("patchsize") : 16}
+    }
+  },
   "message": function (e) {
     if (e) {
       if (e.data) {
@@ -229,7 +228,6 @@ var config = {
 };
 
 config.port.connect();
-background.receive("stop", config.app.stop);
 
 window.addEventListener("load", config.load, false);
 window.addEventListener("message", config.message, false);
