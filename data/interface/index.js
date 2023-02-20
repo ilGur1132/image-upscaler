@@ -62,6 +62,9 @@ var config = {
     }
   },
   "message": function (e) {
+    
+    console.error(e);
+    
     if (e.data.from === "app") {
       if (e.data.name === "storage") {
         config.app.prefs.debluraction = false;
