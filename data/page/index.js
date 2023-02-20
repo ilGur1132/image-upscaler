@@ -1,4 +1,7 @@
-if (window === window.top) {
+const cond_1 = window === window.top;
+const cond_2 = document.documentElement.getAttribute("context") === "webapp";
+
+if (cond_1 || cond_2) {
   var background = {
     "port": null,
     "message": {},
