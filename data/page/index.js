@@ -137,19 +137,25 @@ if (window === window.top) {
       const support = document.getElementById("support");
       const donation = document.getElementById("donation");
       /*  */
-      reload.addEventListener("click", function () {
-        document.location.reload();
-      });
+      if (reload) {
+        reload.addEventListener("click", function () {
+          document.location.reload();
+        });
+      }
       /*  */
-      support.addEventListener("click", function () {
-        const url = app.addon.homepage();
-        chrome.tabs.create({"url": url, "active": true});
-      }, false);
+      if (support) {
+        support.addEventListener("click", function () {
+          const url = app.addon.homepage();
+          chrome.tabs.create({"url": url, "active": true});
+        }, false);
+      }
       /*  */
-      donation.addEventListener("click", function () {
-        const url = app.addon.homepage() + "?reason=support";
-        chrome.tabs.create({"url": url, "active": true});
-      }, false);
+      if (donation) {
+        donation.addEventListener("click", function () {
+          const url = app.addon.homepage() + "?reason=support";
+          chrome.tabs.create({"url": url, "active": true});
+        }, false);
+      }
       /*  */
       app.storage.load(app.start);
       window.removeEventListener("load", app.load, false);
