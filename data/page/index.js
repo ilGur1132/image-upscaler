@@ -86,9 +86,6 @@ if (cond_1 || cond_2) {
     "start": async function () {
       let target = window === window.top ? document.querySelector("iframe").contentWindow : window;
       /*  */
-      
-      console.error(target);
-      
       target.postMessage({
         "from": "app",
         "name": "storage",
@@ -163,9 +160,6 @@ if (cond_1 || cond_2) {
         }, false);
       }
       /*  */
-      
-      console.error(123);
-      
       app.storage.load(app.start);
       window.removeEventListener("load", app.load, false);
     },
@@ -195,9 +189,6 @@ if (cond_1 || cond_2) {
       }
     },
     "message": function (e) {
-      
-      console.error(e);
-      
       if (e) {
         if (e.data) {
           if (e.data.from === "sandbox") {
