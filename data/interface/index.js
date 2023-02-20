@@ -3,6 +3,7 @@ var config = {
   "data": null,
   "reader": null,
   "abortController": null,
+  "parent": chrome && chrome.storage ? window : window.parent,
   "resize": {
     "timeout": null
   },
@@ -29,6 +30,20 @@ var config = {
       e.preventDefault();
     }
   },
+  "loadend": function (e) {
+    config.data = e.target.result;
+    const image = document.createElement("img");
+    /*  */
+    config.input.element.appendChild(image);
+    image.src = URL.createObjectURL(new Blob([config.data]));
+    config.input.element.querySelector("span").setAttribute("class", "image");
+    config.input.element.querySelector("span").textContent = config.file.name;
+    /*  */
+    const cloned = image.cloneNode(true);
+    config.input.element.appendChild(cloned);
+    cloned.setAttribute("original", '');
+    image.setAttribute("scaled", '');
+  },
   "options": {
     "scale": {
       "element": null
@@ -44,6 +59,24 @@ var config = {
     },
     "useai": {
       "element": null
+    }
+  },
+  "message": function (e) {
+    if (e.data.from === "app") {
+      if (e.data.name === "storage") {
+        config.app.prefs.debluraction = false;
+        config.app.prefs.scale = e.data.value.scale;
+        config.app.prefs.level = e.data.value.level;
+        config.app.prefs.useai = e.data.value.useai;
+        config.app.prefs.usepatch = e.data.value.usepatch;
+        config.app.prefs.patchsize = e.data.value.patchsize;
+        /*  */
+        config.output.inner.textContent = "Preview";
+        config.input.element.setAttribute("empty", '');
+        config.console.element.textContent = ">> Image Upscaler is ready. \n>> Please drop an image in the above area (left side) to start upscaler.";
+        /*  */
+        config.app.update();
+      }
     }
   },
   "handle": {
@@ -66,78 +99,76 @@ var config = {
       }
     }
   },
-  "loadend": function (e) {
-    config.data = e.target.result;
-    const image = document.createElement("img");
-    /*  */
-    config.input.element.appendChild(image);
-    image.src = URL.createObjectURL(new Blob([config.data]));
-    config.input.element.querySelector("span").setAttribute("class", "image");
-    config.input.element.querySelector("span").textContent = config.file.name;
-    /*  */
-    const cloned = image.cloneNode(true);
-    config.input.element.appendChild(cloned);
-    cloned.setAttribute("original", '');
-    image.setAttribute("scaled", '');
-  },
-  "message": function (e) {
-    if (e.data.from === "app") {
-      if (e.data.name === "storage") {
-        config.app.prefs.debluraction = false;
-        config.app.prefs.scale = e.data.value.scale;
-        config.app.prefs.level = e.data.value.level;
-        config.app.prefs.useai = e.data.value.useai;
-        config.app.prefs.usepatch = e.data.value.usepatch;
-        config.app.prefs.patchsize = e.data.value.patchsize;
-        /*  */
-        config.reader = new FileReader();
-        config.input.element = document.getElementById("fileio");
-        config.output.element = document.getElementById("output");
-        config.upscale.element = document.getElementById("upscale");
-        config.console.element = document.getElementById("console");
-        config.download.element = document.getElementById("download");
-        config.options.scale.element = document.getElementById("scale");
-        config.options.level.element = document.getElementById("level");
-        config.options.useai.element = document.getElementById("useai");
-        config.input.fileio = document.querySelector("input[type='file']");
-        config.options.usepatch.element = document.getElementById("usepatch");
-        config.options.patchsize.element = document.getElementById("patchsize");
-        config.output.inner = config.output.element.children[0];
-        /*  */
-        config.output.inner.textContent = "Preview";
-        config.input.element.setAttribute("empty", '');
-        config.upscale.element.addEventListener("click", config.app.render, false);
-        config.options.scale.element.addEventListener("change", config.app.store, false);
-        config.options.level.element.addEventListener("change", config.app.store, false);
-        config.options.useai.element.addEventListener("change", config.app.store, false);
-        config.options.usepatch.element.addEventListener("change", config.app.store, false);
-        config.options.patchsize.element.addEventListener("change", config.app.store, false);
-        config.input.fileio.addEventListener("change", function (e) {config.handle.file(e.target.files[0])}, false);
-        config.reader.addEventListener ? config.reader.addEventListener("loadend", config.loadend, false) : config.reader.loadend = config.loadend;
-        config.console.element.textContent = ">> Image Upscaler is ready. \n>> Please drop an image in the above area (left side) to start upscaler.";
-        /*  */
-        config.download.element.addEventListener("click", function () {
-          const upscaled = config.output.inner.querySelector("img");
-          /*  */
-          if (upscaled) {
-            if (upscaled.src) {
-              if (upscaled.src.indexOf("data:image") !== -1) {
-                window.parent.postMessage({
-                  "from": "sandbox",
-                  "name": "upscaled",
-                  "value": {
-                    "src": upscaled.src,
-                    "ext": config.file.type.replace("image/", '')
-                  }
-                }, '*');
-              }
-            }
-          }
-        });
-        /*  */
-        config.app.update();
+  "storage": {
+    "local": {},
+    "read": function (id) {
+      return config.storage.local[id];
+    },
+    "load": function (callback) {
+      chrome.storage.local.get(null, function (e) {
+        config.storage.local = e;
+        callback();
+      });
+    },
+    "write": function (id, data) {
+      if (id) {
+        if (data !== '' && data !== null && data !== undefined) {
+          let tmp = {};
+          tmp[id] = data;
+          config.storage.local[id] = data;
+          chrome.storage.local.set(tmp);
+        } else {
+          delete config.storage.local[id];
+          chrome.storage.local.remove(id);
+        }
       }
     }
+  },
+  "load": function () {
+    config.input.element = document.getElementById("fileio");
+    config.output.element = document.getElementById("output");
+    config.upscale.element = document.getElementById("upscale");
+    config.console.element = document.getElementById("console");
+    config.download.element = document.getElementById("download");
+    config.options.scale.element = document.getElementById("scale");
+    config.options.level.element = document.getElementById("level");
+    config.options.useai.element = document.getElementById("useai");
+    config.input.fileio = document.querySelector("input[type='file']");
+    config.options.usepatch.element = document.getElementById("usepatch");
+    config.options.patchsize.element = document.getElementById("patchsize");
+    /*  */
+    config.reader = new FileReader();
+    config.output.inner = config.output.element.children[0];
+    /*  */
+    config.reader.addEventListener("loadend", config.loadend, false)
+    config.upscale.element.addEventListener("click", config.app.render, false);
+    config.options.scale.element.addEventListener("change", config.app.store, false);
+    config.options.level.element.addEventListener("change", config.app.store, false);
+    config.options.useai.element.addEventListener("change", config.app.store, false);
+    config.options.usepatch.element.addEventListener("change", config.app.store, false);
+    config.options.patchsize.element.addEventListener("change", config.app.store, false);
+    config.input.fileio.addEventListener("change", function (e) {config.handle.file(e.target.files[0])}, false);
+    /*  */
+    config.download.element.addEventListener("click", function () {
+      const upscaled = config.output.inner.querySelector("img");
+      /*  */
+      if (upscaled) {
+        if (upscaled.src) {
+          if (upscaled.src.indexOf("data:image") !== -1) {
+            config.parent.postMessage({
+              "from": "sandbox",
+              "name": "upscaled",
+              "value": {
+                "src": upscaled.src,
+                "ext": config.file.type.replace("image/", '')
+              }
+            }, '*');
+          }
+        }
+      }
+    });
+    /*  */
+    window.removeEventListener("load", config.load, false);
   },
   "app": {
     "prefs": {},
@@ -174,11 +205,11 @@ var config = {
       config.app.prefs.usepatch = usepatch;
       config.app.prefs.patchsize = patchsize;
       /*  */
-      window.parent.postMessage({"name": "scale", "from": "sandbox", "value": {"scale": config.app.prefs.scale}}, '*');
-      window.parent.postMessage({"name": "level", "from": "sandbox", "value": {"level": config.app.prefs.level}}, '*');
-      window.parent.postMessage({"name": "useai", "from": "sandbox", "value": {"useai": config.app.prefs.useai}}, '*');
-      window.parent.postMessage({"name": "usepatch", "from": "sandbox", "value": {"usepatch": config.app.prefs.usepatch}}, '*');
-      window.parent.postMessage({"name": "patchsize", "from": "sandbox", "value": {"patchsize": config.app.prefs.patchsize}}, '*');
+      config.parent.postMessage({"name": "scale", "from": "sandbox", "value": {"scale": config.app.prefs.scale}}, '*');
+      config.parent.postMessage({"name": "level", "from": "sandbox", "value": {"level": config.app.prefs.level}}, '*');
+      config.parent.postMessage({"name": "useai", "from": "sandbox", "value": {"useai": config.app.prefs.useai}}, '*');
+      config.parent.postMessage({"name": "usepatch", "from": "sandbox", "value": {"usepatch": config.app.prefs.usepatch}}, '*');
+      config.parent.postMessage({"name": "patchsize", "from": "sandbox", "value": {"patchsize": config.app.prefs.patchsize}}, '*');
       /*  */
       config.app.update();
     },
@@ -433,6 +464,7 @@ var config = {
   }
 };
 
+window.addEventListener("load", config.load, false);
 window.addEventListener("drop", config.nohandler, false);
 window.addEventListener("message", config.message, false);
 window.addEventListener("dragover", function (e) {e.preventDefault()});
