@@ -83,6 +83,9 @@ if (window === window.top) {
     "start": async function () {
       let target = window === window.top ? document.querySelector("iframe").contentWindow : window;
       /*  */
+      
+      console.error(target);
+      
       target.postMessage({
         "from": "app",
         "name": "storage",
@@ -157,6 +160,9 @@ if (window === window.top) {
         }, false);
       }
       /*  */
+      
+      console.error(123);
+      
       app.storage.load(app.start);
       window.removeEventListener("load", app.load, false);
     },
