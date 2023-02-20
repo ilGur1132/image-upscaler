@@ -186,6 +186,9 @@ if (window === window.top) {
       }
     },
     "message": function (e) {
+      
+      console.error(e);
+      
       if (e) {
         if (e.data) {
           if (e.data.from === "sandbox") {
