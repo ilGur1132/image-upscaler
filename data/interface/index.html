@@ -15,7 +15,7 @@
           <span>
             <svg width="16" height="16" viewBox="0 0 32 32">
               <path d="M 10.348666,0.73791638 6.776,4.3105844 18.521336,16.055921 6.776,27.801258 10.348666,31.373928 25.666672,16.055921 Z"/>
-            </svg>            
+            </svg>
           </span>
         </div>
 			</div>
@@ -37,27 +37,58 @@
       <details open>
         <summary>Settings</summary>
         <div id="options">
-          <div class="left">
-            <label for="scale" title="Choose an scale level (2x, 3x or 4x).">
-              Upscale Level
-              <select id="scale">
-                <option value="2x">2x</option>
-                <option value="3x">3x</option>
-                <option value="4x">4x</option>
-                <option mode='canvas' value="5x">5x</option>
-                <option mode='canvas' value="6x">6x</option>
-                <option mode='canvas' value="7x">7x</option>
-                <option mode='canvas' value="8x">8x</option>
-                <option mode='canvas' value="9x">9x</option>
-                <option mode='canvas' value="10x">10x</option>
-              </select>
+          <label for="scale" title="Choose an scale level (2x, 3x or 4x).">
+            <svg width="16" height="16" viewBox="0 0 24 24">
+              <path d="M 12,6.8571429 C 9.1594286,6.8571429 6.8571429,9.1594286 6.8571429,12 6.8571429,14.838857 9.1594286,17.142857 12,17.142857 14.838857,17.142857 17.142857,14.838857 17.142857,12 17.142857,9.1594286 14.838857,6.8571429 12,6.8571429 Z"/>
+            </svg>
+            <div class="title">Select Upscale Level</div>
+            <select id="scale">
+              <option value="2x">2x</option>
+              <option mode="ai-client" value="3x">3x</option>
+              <option value="4x">4x</option>
+              <option mode="canvas" value="5x">5x</option>
+              <option mode="canvas" value="6x">6x</option>
+              <option mode="canvas" value="7x">7x</option>
+              <option mode="ai-client" value="8x">8x</option>
+              <option mode="canvas" value="9x">9x</option>
+              <option mode="canvas" value="10x">10x</option>
+            </select>
+          </label>
+          <!-- -->
+          <div class="summary" mode="canvas">
+            <svg width="16" height="16" viewBox="0 0 24 24">
+              <path d="M 12,6.8571429 C 9.1594286,6.8571429 6.8571429,9.1594286 6.8571429,12 6.8571429,14.838857 9.1594286,17.142857 12,17.142857 14.838857,17.142857 17.142857,14.838857 17.142857,12 17.142857,9.1594286 14.838857,6.8571429 12,6.8571429 Z"/>
+            </svg>
+            <div for="usecanvas">
+              <div><b>1.</b> Use HTML5 Canvas</div>
+            </div>
+            <input type="checkbox" id="usecanvas">
+          </div>
+          <details mode="ai-client">
+            <summary for="useaiclient" title="Click to see the options">
+              <svg width="12" height="12" viewBox="0 0 20 20">
+                <g transform="translate(-464.000000, -380.000000)">
+                  <g transform="translate(464.000000, 380.000000)">
+                    <path d="M17.4,11 C17.4,10.7 17.5,10.4 17.5,10 C17.5,9.6 17.5,9.3 17.4,9 L19.5,7.3 C19.7,7.1 19.7,6.9 19.6,6.7 L17.6,3.2 C17.5,3.1 17.3,3 17,3.1 L14.5,4.1 C14,3.7 13.4,3.4 12.8,3.1 L12.4,0.5 C12.5,0.2 12.2,0 12,0 L8,0 C7.8,0 7.5,0.2 7.5,0.4 L7.1,3.1 C6.5,3.3 6,3.7 5.4,4.1 L3,3.1 C2.7,3 2.5,3.1 2.3,3.3 L0.3,6.8 C0.2,6.9 0.3,7.2 0.5,7.4 L2.6,9 C2.6,9.3 2.5,9.6 2.5,10 C2.5,10.4 2.5,10.7 2.6,11 L0.5,12.7 C0.3,12.9 0.3,13.1 0.4,13.3 L2.4,16.8 C2.5,16.9 2.7,17 3,16.9 L5.5,15.9 C6,16.3 6.6,16.6 7.2,16.9 L7.6,19.5 C7.6,19.7 7.8,19.9 8.1,19.9 L12.1,19.9 C12.3,19.9 12.6,19.7 12.6,19.5 L13,16.9 C13.6,16.6 14.2,16.3 14.7,15.9 L17.2,16.9 C17.4,17 17.7,16.9 17.8,16.7 L19.8,13.2 C19.9,13 19.9,12.7 19.7,12.6 L17.4,11 L17.4,11 Z M10,13.5 C8.1,13.5 6.5,11.9 6.5,10 C6.5,8.1 8.1,6.5 10,6.5 C11.9,6.5 13.5,8.1 13.5,10 C13.5,11.9 11.9,13.5 10,13.5 L10,13.5 Z"/>
+                  </g>
+                </g>
+              </svg>
+              <div><b>2.</b> Use Client-Side AI</div>
+              <input type="checkbox" id="useaiclient">
+            </summary>
+            <label>Mark this option to use the client-side artificial intelligence for upscaling.</label>
+            <p class="note">● This option uses UpscalerJS and TensorFlow projects:</p>
+            <p class="note">● UpscalerJS: <a target="_blank" href="https://github.com/thekevinscott/UpscalerJS">https://github.com/thekevinscott/UpscalerJS</a></p>
+            <p class="note">● TensorFlow: <a target="_blank" href="https://github.com/tensorflow/tfjs">https://github.com/tensorflow/tfjs</a></p>
+            <label for="usepatch" title="Mark this option to divide the input image into patches before upscaling. Using patches enables you to see the upscaling progress.">
+              Split the Image into Patches
+              <input type="checkbox" id="usepatch">
             </label>
             <label for="level" title="Choose a precision level for the artificial intelligence engine.">
               Upscale Precision
               <select id="level">
                 <option value="slim">Slim</option>
                 <option value="medium">Medium</option>
-                <option value="legacy">Legacy</option>
                 <option value="thick">Thick</option>
               </select>
             </label>
@@ -65,17 +96,36 @@
               Patch Size (px)
               <input type="number" id="patchsize">
             </label>
-          </div>
-          <div class="right">
-            <label for="useai" title="Mark this option to use artificial intelligence for upscaling. The alternative engine is HTML5 Canvas.">
-              Use Artifial Intelligence
-              <input type="checkbox" id="useai">
-            </label>
-            <label for="usepatch" title="Mark this option to divide the input image into patches before upscaling. Using patches enables you to see the upscaling progress.">
-              Split the Image into Patches
-              <input type="checkbox" id="usepatch">
-            </label>
-          </div>
+          </details>
+          <details mode="ai-server">
+            <summary for="useaiserver" title="Click to see the options">
+              <svg width="12" height="12" viewBox="0 0 20 20">
+                <g transform="translate(-464.000000, -380.000000)">
+                  <g transform="translate(464.000000, 380.000000)">
+                    <path d="M17.4,11 C17.4,10.7 17.5,10.4 17.5,10 C17.5,9.6 17.5,9.3 17.4,9 L19.5,7.3 C19.7,7.1 19.7,6.9 19.6,6.7 L17.6,3.2 C17.5,3.1 17.3,3 17,3.1 L14.5,4.1 C14,3.7 13.4,3.4 12.8,3.1 L12.4,0.5 C12.5,0.2 12.2,0 12,0 L8,0 C7.8,0 7.5,0.2 7.5,0.4 L7.1,3.1 C6.5,3.3 6,3.7 5.4,4.1 L3,3.1 C2.7,3 2.5,3.1 2.3,3.3 L0.3,6.8 C0.2,6.9 0.3,7.2 0.5,7.4 L2.6,9 C2.6,9.3 2.5,9.6 2.5,10 C2.5,10.4 2.5,10.7 2.6,11 L0.5,12.7 C0.3,12.9 0.3,13.1 0.4,13.3 L2.4,16.8 C2.5,16.9 2.7,17 3,16.9 L5.5,15.9 C6,16.3 6.6,16.6 7.2,16.9 L7.6,19.5 C7.6,19.7 7.8,19.9 8.1,19.9 L12.1,19.9 C12.3,19.9 12.6,19.7 12.6,19.5 L13,16.9 C13.6,16.6 14.2,16.3 14.7,15.9 L17.2,16.9 C17.4,17 17.7,16.9 17.8,16.7 L19.8,13.2 C19.9,13 19.9,12.7 19.7,12.6 L17.4,11 L17.4,11 Z M10,13.5 C8.1,13.5 6.5,11.9 6.5,10 C6.5,8.1 8.1,6.5 10,6.5 C11.9,6.5 13.5,8.1 13.5,10 C13.5,11.9 11.9,13.5 10,13.5 L10,13.5 Z"/>
+                  </g>
+                </g>
+              </svg>
+              <div><b>3.</b> Use Server-Side AI</div>
+              <input type="checkbox" id="useaiserver">
+            </summary>
+            <label>Mark this option to use the server-side artificial intelligence for upscaling.</label>
+            <p class="note">● This option uses the super resolution API from ClipDrop: <a target="_blank" href="https://clipdrop.co/apis/docs/super-resolution">https://clipdrop.co/apis/docs/super-resolution</a></p>
+            <p class="note">● Please read the related <b>privacy policy</b> here: <a target="_blank" href="https://clipdrop.co/privacy">https://clipdrop.co/privacy</a></p>
+            <p class="note">● To obtain the API key, please visit: <a target="_blank" href="https://clipdrop.co/apis">https://clipdrop.co/apis</a></p>
+            <p class="note">● Then, press the - <b>Get an API Key</b> - button and add it to the below area.</p>
+            <div class="apikey">
+              <input type="password" id="apikey" placeholder="ClipDrop API Key">
+              <div class="toggle" status="hide">
+                <svg class="show" width="20" height="20" viewBox="0 0 20 20">
+                  <path d="M.2 10a11 11 0 0 1 19.6 0A11 11 0 0 1 .2 10zm9.8 4a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+                </svg>
+                <svg class="hide" width="20" height="20" viewBox="0 0 20 20">
+                  <path d="M12.81 4.36l-1.77 1.78a4 4 0 0 0-4.9 4.9l-2.76 2.75C2.06 12.79.96 11.49.2 10a11 11 0 0 1 12.6-5.64zm3.8 1.85c1.33 1 2.43 2.3 3.2 3.79a11 11 0 0 1-12.62 5.64l1.77-1.78a4 4 0 0 0 4.9-4.9l2.76-2.75zm-.25-3.99l1.42 1.42L3.64 17.78l-1.42-1.42L16.36 2.22z"/>
+                </svg>
+              </div>
+            </div>
+          </details>
         </div>
       </details>
 		</div>

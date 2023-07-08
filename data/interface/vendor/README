@@ -1,9 +1,8 @@
 This addon uses the following opensource projects:
 
-tf.min.js: https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.2.0/dist/tf.min.js
-upscaler.js: https://cdn.jsdelivr.net/npm/upscaler@1.0.0-beta.14/dist/browser/umd/upscaler.min.js
+tf.min.js: https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.8.0/dist/tf.min.js
+upscaler.js: https://cdn.jsdelivr.net/npm/upscaler@1.0.0-beta.16/dist/browser/umd/upscaler.min.js
 
-models > slim > *: https://registry.npmjs.org/@upscalerjs/esrgan-slim/-/esrgan-slim-1.0.0-beta.7.tgz
-models > thick > *: https://registry.npmjs.org/@upscalerjs/esrgan-thick/-/esrgan-thick-1.0.0-beta.10.tgz
-models > medium > *: https://registry.npmjs.org/@upscalerjs/esrgan-medium/-/esrgan-medium-1.0.0-beta.7.tgz
-models > legacy > *: https://registry.npmjs.org/@upscalerjs/esrgan-legacy/-/esrgan-legacy-1.0.0-beta.9.tgz
+models > slim > *: https://registry.npmjs.org/@upscalerjs/esrgan-slim/-/esrgan-slim-1.0.0-beta.8.tgz
+models > thick > *: https://registry.npmjs.org/@upscalerjs/esrgan-thick/-/esrgan-thick-1.0.0-beta.11.tgz
+models > medium > *: https://registry.npmjs.org/@upscalerjs/esrgan-medium/-/esrgan-medium-1.0.0-beta.9.tgz

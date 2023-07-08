@@ -1,13 +1,14 @@
 html {
   width: 100%;
   height: 100%;
+  overflow: hidden;
   background-color: #fff;
 }
 
 body {
   margin: 0;
   padding: 5px;
-  font-size: 12px;
+  font-size: 13px;
   overflow-x: hidden;
   overflow-y: overlay;
   font-family: monospace;
@@ -38,20 +39,72 @@ body {
 
 .options details {
   border: 0;
-  margin: 0;
   padding: 0;
   width: 100%;
+  margin: 1px auto;
   box-sizing: border-box;
 }
 
-.options summary {
+.options details[open] details[open] summary {
+  background-color: #f1f1f1;
+}
+
+.options summary, .options .summary {
   color: #333;
   height: 42px;
-  cursor: pointer;
-  font-weight: 600;
+  list-style: none;
   user-select: none;
   text-indent: 10px;
   line-height: 42px;
+  background-color: #fff;
+}
+
+.options .summary {
+  width: 100%;
+  margin: 1px auto;
+}
+
+.options summary div,
+.options .summary div {
+  cursor: pointer;
+}
+
+.options .title, .options summary div, .options .summary div {
+  display: inline-block;
+}
+
+.options .summary svg {
+  margin: 0;
+  fill: #333;
+  margin-left: 1px;
+  margin-right: -13px;
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+.options summary svg {
+  margin: 0;
+  fill: #333;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: -1px;
+  vertical-align: middle;
+}
+
+.options > details > summary {
+  font-weight: 600;
+}
+
+html[mode='canvas'] .options .summary[mode='canvas'] {
+  font-weight: 600;
+}
+
+html[mode='ai-client'] .options details[mode='ai-client'] summary {
+  font-weight: 600;
+}
+
+html[mode='ai-server'] .options details[mode='ai-server'] summary {
+  font-weight: 600;
 }
 
 .container #fileio {
@@ -83,7 +136,7 @@ body {
   left: 10px;
   color: #555;
   bottom: 10px;
-  font-size: 12px;
+  font-size: 13px;
   text-align: center;
   position: absolute;
   font-family: monospace;
@@ -125,12 +178,13 @@ body {
 
 .container #output .inner {
   width: 100%;
-  color: #555;
+  color: #333;
   height: 100%;
   display: flex;
   overflow: auto;
   cursor: no-drop;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 600;
   align-items: center;
   font-family: monospace;
   justify-content: center;
@@ -184,7 +238,7 @@ body {
   color: #333;
   height: 100%;
   padding: 10px;
-  font-size: 12px;
+  font-size: 13px;
   cursor: crosshair;
   box-sizing: border-box;
   font-family: monospace;
@@ -241,7 +295,7 @@ body {
   height: 48px;
   outline: none;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 1px;
   vertical-align: middle;
@@ -261,12 +315,13 @@ body {
   color: #333;
   width: 100%;
   height: 82px;
-  font-size: 12px;
+  padding: 10px;
+  font-size: 13px;
   overflow-y: auto;
   min-height: 82px;
   max-height: 82px;
   line-height: 22px;
-  padding: 5px 10px;
+  user-select: none;
   word-wrap: break-word;
   white-space: pre-line;
   box-sizing: border-box;
@@ -274,20 +329,14 @@ body {
 }
 
 #options {
-  padding: 0;
   display: flex;
-  flex-flow: row;
+  height: 100vh;
+  padding: 0 10px;
+  flex-flow: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
   box-sizing: border-box;
-}
-
-#options .left {
-  flex: 1;
-  padding-right: 10px;
-}
-
-#options .right {
-  flex: 1;
-  padding-left: 10px;
+  max-height: calc(100vh - 492px);
 }
 
 #options select, #options input[type='number'] {
@@ -297,14 +346,14 @@ body {
   height: 42px;
   float: right;
   outline: none;
-  font-size: 12px;
+  font-size: 13px;
   background: #fff;
   font-weight: 600;
-  text-indent: 5px;
+  text-indent: 10px;
   vertical-align: middle;
   font-family: monospace;
   box-sizing: border-box;
-  border: solid 1px rgba(0,0,0,0.1);
+  border: solid 1px rgba(0,0,0,0.25);
 }
 
 label:has(:disabled) {
@@ -315,25 +364,46 @@ label:has(:disabled) {
   display: none;
 }
 
-html[mode='canvas'] #options select option[mode='canvas'] {
+#options select option[mode='ai-client'] {
+  display: none;
+}
+
+html[mode='canvas'] #options select option {
+  display: block;
+}
+
+html[mode='ai-client'] #options select option[mode='ai-client'] {
   display: block;
 }
 
 #options label {
   padding: 0;
-  width: 100%;
   color: #333;
   height: 42px;
-  font-size: 12px;
+  cursor: default;
+  font-size: 13px;
   text-align: left;
   margin: 1px auto;
-  text-indent: 5px;
-  font-weight: 600;
+  text-indent: 10px;
   line-height: 42px;
   user-select: none;
   display: inline-block;
   box-sizing: border-box;
   font-family: monospace;
+  width: calc(100% - 10px);
+}
+
+#options label  svg {
+  margin: 0;
+  fill: #333;
+  margin-left: -4px;
+  margin-right: -5px;
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+#options details label {
+  text-indent: 30px;
 }
 
 #options label[for='preview'] {
@@ -349,9 +419,94 @@ html[mode='canvas'] #options select option[mode='canvas'] {
   flex-flow: column;
 }
 
+#options .note {
+  margin: 0;
+  padding: 0;
+  color: #333;
+  user-select: none;
+  line-height: 32px;
+  text-indent: 30px;
+}
+
+#options .note a {
+  color: #0058ff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: monospace;
+}
+
 #options input[type='checkbox'] {
-  margin: -1px 0 0 5px;
+  float: right;
+  outline: none;
+  margin: 15px 15px 0 0;
+}
+
+#options input[type='text'], #options input[type='password'] {
+  padding: 0;
+  color: #333;
+  width: 100%;
+  height: 48px;
+  outline: none;
+  font-size: 13px;
+  overflow: hidden;
+  font-weight: 600;
+  text-indent: 20px;
+  padding-right: 50px;
+  letter-spacing: 1px;
+  box-sizing: border-box;
+  font-family: monospace;
+  border: solid 1px rgba(0,0,0,0.25);
+}
+
+#options input[type='text']:placeholder-shown, 
+#options input[type='password']:placeholder-shown {
+  border-color: red;
+}
+
+#options .apikey {
+  border: 0;
+  padding: 0;
+  width: 100%;
+  height: 60px;
+  margin: auto;
+  margin-top: 15px;
+  position: relative;
+  max-width: calc(100% - 90px);
+}
+
+#options .apikey[state="disabled"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+#options .apikey .toggle {
+  top: 5px;
+  right: 5px;
+  display: flex;
+  padding: 10px;
+  cursor: pointer;
+  align-items: center;
+  position: absolute;
+  box-sizing: border-box;
+  background: transparent;
+  justify-content: center;
+  transition: 300ms ease all;
+}
+
+#options .apikey .toggle svg {
+  fill: #555;
+  display: none;
+  pointer-events: none;
   vertical-align: middle;
+}
+
+#options .apikey .toggle[status='show'] .show {
+  display: block;
+}
+
+#options .apikey .toggle[status='hide'] .hide {
+  display: block;
 }
 
 @media (max-width: 600px) {
@@ -388,32 +543,23 @@ html[mode='canvas'] #options select option[mode='canvas'] {
     margin-top: 20px;
     max-height: calc(100% - 48px);
   }
-  .options #options {
-    flex-flow: column;
+  .options .title {
+    width: calc(100% - 90px);
   }
-  .options #options .right {
-    padding-left: 0;
+  #options {
+    max-height: calc(100vh - 450px);
   }
-  .options #options input[type='checkbox'] {
-    float: right;
-    margin: 15px;
-    vertical-align: middle;
-  }
-  .options #options input[type='button'] {
-    margin-top: 5px;
-  }
-  .options #options label[for='preview'],
-  .options #options input[type='button'] {
-    width: 100%;
-  }
-  .options #options label[for='preview'] {
-    height: auto;
-  }
-}
-
-@media (max-width: 400px) {
   #options select, #options input[type='number'] {
     width: 68px;
+  }
+  .options summary div, .options .summary div {
+    width: calc(100% - 68px);
+  }
+  .options .title, .options summary div, .options .summary div {
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-overflow: ellipsis;
   }
 }
 

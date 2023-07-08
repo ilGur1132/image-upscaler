@@ -74,14 +74,20 @@ if (cond_1 || cond_2) {
     "prefs": {
       set scale (val) {app.storage.write("scale", val)},
       set level (val) {app.storage.write("level", val)},
-      set useai (val) {app.storage.write("useai", val)},
+      set apikey (val) {app.storage.write("apikey", val)},
       set usepatch (val) {app.storage.write("usepatch", val)},
       set patchsize (val) {app.storage.write("patchsize", val)},
+      set usecanvas (val) {app.storage.write("usecanvas", val)},
+      set useaiclient (val) {app.storage.write("useaiclient", val)},
+      set useaiserver (val) {app.storage.write("useaiserver", val)},
       get scale () {return app.storage.read("scale") !== undefined ? app.storage.read("scale") : "4x"},
-      get useai () {return app.storage.read("useai") !== undefined ? app.storage.read("useai") : false},
+      get apikey () {return app.storage.read("apikey") !== undefined ? app.storage.read("apikey") : ''},
       get level () {return app.storage.read("level") !== undefined ? app.storage.read("level") : "thick"},
       get usepatch () {return app.storage.read("usepatch") !== undefined ? app.storage.read("usepatch") : true},
-      get patchsize () {return app.storage.read("patchsize") !== undefined ? app.storage.read("patchsize") : 16}
+      get patchsize () {return app.storage.read("patchsize") !== undefined ? app.storage.read("patchsize") : 16},
+      get usecanvas () {return app.storage.read("usecanvas") !== undefined ? app.storage.read("usecanvas") : true},
+      get useaiclient () {return app.storage.read("useaiclient") !== undefined ? app.storage.read("useaiclient") : false},
+      get useaiserver () {return app.storage.read("useaiserver") !== undefined ? app.storage.read("useaiserver") : false}
     },
     "start": async function () {
       let target = window === window.top ? document.querySelector("iframe").contentWindow : window;
@@ -92,9 +98,12 @@ if (cond_1 || cond_2) {
         "value": {
           "scale": app.prefs.scale,
           "level": app.prefs.level,
-          "useai": app.prefs.useai,
+          "apikey": app.prefs.apikey,
           "usepatch": app.prefs.usepatch,
-          "patchsize": app.prefs.patchsize
+          "patchsize": app.prefs.patchsize,
+          "usecanvas": app.prefs.usecanvas,
+          "useaiclient": app.prefs.useaiclient,
+          "useaiserver": app.prefs.useaiserver
         }
       }, '*');
     },
@@ -196,6 +205,10 @@ if (cond_1 || cond_2) {
               app.prefs.scale = e.data.value.scale;
             }
             /*  */
+            if (e.data.name === "apikey") {
+              app.prefs.apikey = e.data.value.apikey;
+            }
+            /*  */
             if (e.data.name === "level") {
               app.prefs.level = e.data.value.level;
             }
@@ -208,8 +221,16 @@ if (cond_1 || cond_2) {
               app.prefs.usepatch = e.data.value.usepatch;
             }
             /*  */
-            if (e.data.name === "useai") {
-              app.prefs.useai = e.data.value.useai;
+            if (e.data.name === "usecanvas") {
+              app.prefs.usecanvas = e.data.value.usecanvas;
+            }
+            /*  */
+            if (e.data.name === "useaiclient") {
+              app.prefs.useaiclient = e.data.value.useaiclient;
+            }
+            /*  */
+            if (e.data.name === "useaiserver") {
+              app.prefs.useaiserver = e.data.value.useaiserver;
             }
             /*  */
             if (e.data.name === "upscaled") {

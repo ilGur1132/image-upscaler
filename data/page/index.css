@@ -56,6 +56,9 @@ iframe {
 }
 
 @media (max-width: 500px) {
+  #reload {
+    background-color: #fff;
+  }
 	#support, #donation {
 		display: none;
 	}
