@@ -566,3 +566,7 @@ html[mode='ai-client'] #options select option[mode='ai-client'] {
 html[context='webapp'] .toolbar {
   display: none;
 }
+
+html[context='webapp'] .options details[mode='ai-server'] {
+  display: none;
+}
