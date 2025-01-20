@@ -39,7 +39,8 @@ iframe {
 }
 
 .toolbar table tr td svg {
-  fill: #777;
+  fill: #555;
+  margin-top: -2px;
   pointer-events: none;
   vertical-align: middle;
 }

@@ -125,7 +125,7 @@ html[mode='ai-server'] .options details[mode='ai-server'] summary {
 
 .container #fileio[empty] {
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAPYQAAD2EBqD+naQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAIvSURBVHic7d2xLgRRGEfx79oRvRCFjgQVkn0QNJ5EIRGyhda7SDyHUiOhYAsiNqEk66psqGTEdUfO+XWT7Jf8i5NMscVESOJKtQeUNhjEVLO5vNj2rnnJz/u7108lNnVJU3tAcf2V2Twe37Q9e51JJxGxV2BRp0zVHqC6DADOAOAMAM4A4AwAzgDgDADOAOAMAM4A4AwAzgDgDADOAOAMAM4A4AwAzgDgDADOAOAMAM4A4AwAzgDgDADOAOAMAM4A4AwAzgDgDADOAOAMAM4A4AwAzgDgDADOAOAMAM4A4AwAzgDgDADOAOAMAM4A4AwAzgDgDADOAOAMAM4A4CafjTs+Xd7JEQc1xxSRUhM5b7S/i/vIMSywqKqcY3i0c7X98Tz5bNxbjvmUol9nVkE5//AuFiJi4Ve3dEBKefbzs68AOAOAMwA4A4AzADgDgDMAOAOAMwA4A4AzALjJfwEppVFEvqg5poScUi/lvPaD08eIuPvtPfWl2y9PtWb8lcHZylxvPH5ofZji5HDraq/ApE7xFQBnAHAGAGcAcAYAZwBwBgBnAHAGAGcAcAYAZwBwBgBnAHAGAGcAcAYAZwBwBgBnAHAGAGcAcAYAZwBwBgBnAHAGAGcAcAYAZwBwBgBnAHAGAGcAcAYAZwBwBgBnAHAGAGcAcAYAZwBwBgBnAHAGAGcAcAYAZwBwBgBnAHAGAGcAcAYA13z/k3/u/HLUW19abXv2Mt2MSsyRpO54BxisNnYwXujbAAAAAElFTkSuQmCC') no-repeat center center;
-  background-size: 16px;
+  background-size: 32px;
 }
 
 .container #fileio.disabled {
@@ -183,8 +183,7 @@ html[mode='ai-server'] .options details[mode='ai-server'] summary {
   display: flex;
   overflow: auto;
   cursor: no-drop;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 28px;
   align-items: center;
   font-family: monospace;
   justify-content: center;
@@ -228,7 +227,7 @@ html[mode='ai-server'] .options details[mode='ai-server'] summary {
 }
 
 .container #fileio .arrow svg {
-  fill: #777;
+  fill: #555;
   pointer-events: none;
   vertical-align: middle;
 }
@@ -251,7 +250,7 @@ html[mode='ai-server'] .options details[mode='ai-server'] summary {
   right: 1px;
   bottom: 1px;
   width: 42px;
-  color: #777;
+  color: #555;
   z-index: 10;
   height: 42px;
   font-size: 20px;
@@ -275,7 +274,7 @@ html[mode='ai-server'] .options details[mode='ai-server'] summary {
 }
 
 .download a svg {
-  fill: #777;
+  fill: #555;
   pointer-events: none;
   vertical-align: middle;
 }
@@ -295,7 +294,7 @@ html[mode='ai-server'] .options details[mode='ai-server'] summary {
   height: 48px;
   outline: none;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 1px;
   vertical-align: middle;

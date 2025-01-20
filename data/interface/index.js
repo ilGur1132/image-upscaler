@@ -436,7 +436,7 @@ var config = {
             const upscaler = new Upscaler({
               "model": {
                 "scale": scale,
-                "path": "vendor/models/" + level + "/" + scale + "x/model.json",
+                "path": "vendor/models/" + level + "/x" + scale + "/model.json",
                 ...(level === "thick") && ({"customLayers": config.app.tfjs.custom.layers(scale)})
               }
             });
@@ -460,20 +460,16 @@ var config = {
                 config.console.element.textContent = ">> Image upscale is done! \n>> Please click on the download button to save the upscaled image file.";
               };
             } else {
-              let row = 0;
-              let tr = null;
-              let column = 0;
-              /*  */
               const padding = 0;
               const process = "pre";
+              const current = {"tr": null, "row": 0, "col": 0};
               const patchSize = Number(config.app.prefs.patchsize);
-              const {columns} = Upscaler.getRowsAndColumns(pixels, patchSize);
               /*  */
-              tr = document.createElement("tr");
+              current.tr = document.createElement("tr");
               config.console.element.textContent = ">> Image upscaler is warming up, please wait...";
               await upscaler.warmup({"padding": padding, "patchSize": patchSize});
               /*  */
-              table.appendChild(tr);
+              table.appendChild(current.tr);
               config.output.inner.textContent = '';
               config.output.inner.appendChild(table);
               config.output.inner.removeAttribute("loading");
@@ -485,26 +481,25 @@ var config = {
                   "patchSize": patchSize,
                   "awaitNextFrame": true,
                   "signal": config.abortController.signal,
-                  "progress": function (percent, slice) {
+                  "progress": function (percent, slice, metrics) {
                     const td = document.createElement("td");
                     const slicedimg = document.createElement("img");
                     /*  */
                     slicedimg.src = slice;
-                    slicedimg.dataset.dy = row * scale * patchSize;
-                    slicedimg.dataset.dx = column * scale * patchSize;
+                    slicedimg.dataset.dy = metrics.row * scale * patchSize;
+                    slicedimg.dataset.dx = metrics.col * scale * patchSize;
                     /*  */
                     config.output.inner.scrollTop = config.output.inner.scrollHeight;
                     config.console.element.textContent = ">> Image upscaler progress " + Math.floor(percent * 100) + '%' + ", please wait...";
                     td.appendChild(slicedimg);
-                    tr.appendChild(td);
-                    column++;
                     /*  */
-                    if (column >= columns) {
-                      row++;
-                      column = 0;
-                      tr = document.createElement("tr");
-                      table.appendChild(tr);
+                    if (percent < 1 && metrics.row > current.row) {
+                      current.tr = document.createElement("tr");
+                      table.appendChild(current.tr);
+                      current.row = metrics.row;
                     }
+                    /*  */
+                    current.tr.appendChild(td);
                     /*  */
                     if (process === "pre") {
                       slicedimg.onload = function (e) {
