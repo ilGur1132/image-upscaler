@@ -68,3 +68,16 @@ iframe {
 html[context="webapp"] .toolbar {
   display: none;
 }
+
+html[theme='dark'] .toolbar {
+  color: #ebebeb;
+  background-color: #1e1e1e;
+}
+
+html[theme='dark'] .toolbar table tr td:hover {
+  background-color: rgb(255 255 255 / 10%);
+}
+
+html[theme='dark'] .toolbar table tr td svg {
+  fill: #ebebeb;
+}

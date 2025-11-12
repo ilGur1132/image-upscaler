@@ -75,6 +75,10 @@ var config = {
   },
   "message": function (e) {
     if (e.data.from === "app") {
+      if (e.data.name === "theme") {
+        document.documentElement.setAttribute("theme", e.data.value.theme);
+      }
+      /*  */
       if (e.data.name === "storage") {
         config.app.prefs.debluraction = false;
         config.app.prefs.scale = e.data.value.scale;
@@ -370,6 +374,8 @@ var config = {
             upscaled.src = canvas.toDataURL(config.file.type, 1.0);
             config.download.element.title = "Click to download upscaled image file";
             config.console.element.textContent = ">> Image upscaler is done! \n>> Please click on the download button to save the upscaled image.";
+            /*  */
+            canvas.remove();
           }, 300);
         } else if (config.app.prefs.useaiserver) {
           if (config.app.prefs.apikey) {
@@ -459,6 +465,8 @@ var config = {
                 config.download.element.title = "Click to download image file";
                 config.console.element.textContent = ">> Image upscale is done! \n>> Please click on the download button to save the upscaled image file.";
               };
+              /*  */
+              canvas.remove();
             } else {
               const padding = 0;
               const process = "pre";
@@ -547,6 +555,8 @@ var config = {
               upscaled.src = canvas.toDataURL(config.file.type, 1.0);
               config.download.element.title = "Click to download upscaled image file";
               /*  */
+              canvas.remove();
+              /*  */
               if (config.app.prefs.debluraction) {
                 const deblurlistener = function () {
                   const deblur = document.createElement("canvas");
@@ -560,6 +570,7 @@ var config = {
                   context.drawImage(upscaled, 0, 0, deblur.width, deblur.height);
                   upscaled.src = deblur.toDataURL(config.file.type, 1.0);
                   upscaled.removeEventListener("load", deblurlistener);
+                  /*  */
                   deblur.remove();
                 };
                 /*  */

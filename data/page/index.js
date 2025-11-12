@@ -74,6 +74,7 @@ if (cond_1 || cond_2) {
     "prefs": {
       set scale (val) {app.storage.write("scale", val)},
       set level (val) {app.storage.write("level", val)},
+      set theme (val) {app.storage.write("theme", val)},
       set apikey (val) {app.storage.write("apikey", val)},
       set usepatch (val) {app.storage.write("usepatch", val)},
       set patchsize (val) {app.storage.write("patchsize", val)},
@@ -82,6 +83,7 @@ if (cond_1 || cond_2) {
       set useaiserver (val) {app.storage.write("useaiserver", val)},
       get scale () {return app.storage.read("scale") !== undefined ? app.storage.read("scale") : "4x"},
       get apikey () {return app.storage.read("apikey") !== undefined ? app.storage.read("apikey") : ''},
+      get theme () {return app.storage.read("theme") !== undefined ? app.storage.read("theme") : "light"},
       get level () {return app.storage.read("level") !== undefined ? app.storage.read("level") : "thick"},
       get usepatch () {return app.storage.read("usepatch") !== undefined ? app.storage.read("usepatch") : true},
       get patchsize () {return app.storage.read("patchsize") !== undefined ? app.storage.read("patchsize") : 16},
@@ -91,6 +93,15 @@ if (cond_1 || cond_2) {
     },
     "start": async function () {
       let target = window === window.top ? document.querySelector("iframe").contentWindow : window;
+      document.documentElement.setAttribute("theme", app.prefs.theme);
+      /*  */
+      target.postMessage({
+        "from": "app",
+        "name": "theme",
+        "value": {
+          "theme": app.prefs.theme
+        }
+      }, '*');
       /*  */
       target.postMessage({
         "from": "app",
@@ -145,6 +156,7 @@ if (cond_1 || cond_2) {
       }
     },
     "load": function () {
+      const dark = document.getElementById("dark");
       const reload = document.getElementById("reload");
       const support = document.getElementById("support");
       const donation = document.getElementById("donation");
@@ -167,6 +179,25 @@ if (cond_1 || cond_2) {
           const url = app.addon.homepage() + "?reason=support";
           chrome.tabs.create({"url": url, "active": true});
         }, false);
+      }
+      /*  */
+      if (dark) {
+        dark.addEventListener("click", function () {
+          let mode = document.documentElement.getAttribute("theme");
+          let target = window === window.top ? document.querySelector("iframe").contentWindow : window;
+          /*  */
+          mode = mode === "dark" ? "light" : "dark";
+          document.documentElement.setAttribute("theme", mode);
+          app.prefs.theme = mode;
+          /*  */
+          target.postMessage({
+            "from": "app",
+            "name": "theme",
+            "value": {
+              "theme": app.prefs.theme
+            }
+          }, '*');
+        });
       }
       /*  */
       app.storage.load(app.start);

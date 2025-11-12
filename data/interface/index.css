@@ -96,14 +96,17 @@ body {
 }
 
 html[mode='canvas'] .options .summary[mode='canvas'] {
+  color: #6a9b00;
   font-weight: 600;
 }
 
 html[mode='ai-client'] .options details[mode='ai-client'] summary {
+  color: #6a9b00;
   font-weight: 600;
 }
 
 html[mode='ai-server'] .options details[mode='ai-server'] summary {
+  color: #6a9b00;
   font-weight: 600;
 }
 
@@ -568,4 +571,71 @@ html[context='webapp'] .toolbar {
 
 html[context='webapp'] .options details[mode='ai-server'] {
   display: none;
+}
+
+html[theme='dark'], 
+html[theme='dark'] body {
+  color: #ebebeb;
+  color-scheme: dark;
+  background-color: #1e1e1e;
+}
+
+html[theme='dark'] #options select, 
+html[theme='dark'] .options summary, 
+html[theme='dark'] .options .summary,
+html[theme='dark'] #options input[type='text'],
+html[theme='dark'] #options input[type='number'],
+html[theme='dark'] #options input[type='password'] {
+  color: #ebebeb;
+  background-color: #1e1e1e;
+}
+
+html[theme='dark'] .download:hover {
+  background-color: (255 255 255 / 25%);
+}
+
+html[theme='dark'] .container #fileio {
+  background-color: #1e1e1e;
+}
+
+html[theme='dark'] .options details[open] details[open] summary {
+  background-color: rgb(255 255 255 / 10%);
+}
+
+html[theme='dark'] #options .note a {
+  color: #4f8cff;
+}
+
+html[theme='dark'][mode='canvas'] .options .summary[mode='canvas'],
+html[theme='dark'][mode='ai-client'] .options details[mode='ai-client'] summary,
+html[theme='dark'][mode='ai-server'] .options details[mode='ai-server'] summary {
+  color: #85c300;
+}
+
+html[theme='dark'] .console pre,
+html[theme='dark'] #options .note,
+html[theme='dark'] #options label,
+html[theme='dark'] .container #fileio > span,
+html[theme='dark'] .container #output .inner,
+html[theme='dark'] .container #fileio input[type='file'] {
+  color: #ebebeb;
+}
+
+html[theme='dark'] .console,
+html[theme='dark'] #options select,
+html[theme='dark'] .container #output,
+html[theme='dark'] .container #fileio,
+html[theme='dark'] #options input[type='text'],
+html[theme='dark'] #options input[type='number'],
+html[theme='dark'] #options input[type='password'] {
+  border-color: rgb(255 255 255 / 25%);
+}
+
+html[theme='dark'] .download a svg,
+html[theme='dark'] #options label svg,
+html[theme='dark'] .options summary svg,
+html[theme='dark'] .options .summary svg,
+html[theme='dark'] #options .apikey .toggle svg,
+html[theme='dark'] .container #fileio .arrow svg {
+  fill: #ebebeb;
 }
